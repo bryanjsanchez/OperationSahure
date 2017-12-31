@@ -4,7 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import main.Case;
 import pyramid.Member;
+import pyramid.PyramidNetwork;
 
 /** Class to manage input files. It should open an input.txt file which contains a list of cases to be evaluated.
  * A case consists of the network log file and the maximum number of arrests that can be made. 
@@ -16,43 +18,59 @@ public class InputReader {
 	private String directory;
 
 	public InputReader() {
-		openFile();
+		setDirectory();
 	}
 
 	/** Sets the working directory to the location where the program was run.
 	 * @return file path of the input.txt file with the list of cases to be evaluated. A case consists 
 	 * of the network log file and the maximum number of arrests that can be made. 
 	 */
-	private String openFile() {
+	private void setDirectory() {
 		this.directory = System.getProperty("user.dir") + "/";
-		String inputfilePath = directory + "input.txt"; 
-		return inputfilePath;
 	}
-
-	/** Creates an ArrayList of Member objects with data obtained from an input file.
-	 * @param filePath File path of intput file with Member data to parse.
-	 * @return Returns a list of Member objects.
-	 * @throws IOException 
-	 * @throws NumberFormatException 
+	
+	/** Creates an ArrayList of Case objects with data obtained from input.txt file.
+	 * @return Return list of cases to be analyzed in Operation Suhare.
 	 */
-	public ArrayList<Member> parseMembers(String filename) {
-
+	public ArrayList<Case> getCaseList() {
+		ArrayList<Case> caseList = new ArrayList<>();
+		BufferedReader reader = null;
+		String caseLine;
+		int maxArrests;
+		String filename;
+		String[] caseData;
+		try {
+			reader = new BufferedReader(new FileReader(this.directory + "input.txt"));
+			while ((caseLine = reader.readLine()) != null) {
+				caseData = caseLine.split(" ");
+				maxArrests = Integer.parseInt(caseData[0]);
+				filename = caseData[1];
+				caseList.add(new Case(maxArrests, filename));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return caseList;
+	}
+	
+	/** Creates an ArrayList of Member objects with data obtained from an input file.
+	 * @param filePath File path of input file with Member data to parse.
+	 * @return Returns a list of Member objects.
+	 */
+	public PyramidNetwork parseMembers(String filename) {
 		ArrayList<Member> members = new ArrayList<>();
 		String name;
 		int illegalAssets;
 		String sponsorName;
 		Member sponsor;
-
+		String inputLine;
+		String [] memberData;
 		BufferedReader reader = null;
+		
 		try {
 			reader = new BufferedReader(new FileReader(this.directory + filename));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String inputLine;
-		try {
 			while ((inputLine = reader.readLine()) != null) {
-				String [] memberData = inputLine.split("#");
+				memberData = inputLine.split("#");
 				name = memberData[0];
 				illegalAssets = Integer.parseInt(memberData[1]);
 				sponsor = null;
@@ -77,7 +95,7 @@ public class InputReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return members;
+		return new PyramidNetwork(filename, members);
 	}
 
 	/**

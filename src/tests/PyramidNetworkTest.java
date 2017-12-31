@@ -1,8 +1,6 @@
 package tests;
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import iomanager.InputReader;
@@ -11,8 +9,7 @@ import pyramid.PyramidNetwork;
 
 public class PyramidNetworkTest {
 	public InputReader reader = new InputReader();
-	public ArrayList<Member> members = reader.parseMembers("log1.txt");
-	public PyramidNetwork pyramidNetwork = new PyramidNetwork(members);
+	public PyramidNetwork pyramidNetwork = reader.parseMembers("log1.txt");
 	public Member liam = pyramidNetwork.getGreatBoss();
 	public Member emma = liam.getChild(0);
 	public Member jacob = liam.getLastChild();
@@ -23,11 +20,6 @@ public class PyramidNetworkTest {
 	public Member ethan = jacob.getLastChild();
 	public Member james = william.getChild(0);
 	public Member alexander = james.getChild(0);
-	
-	@Test
-	public void membersTest() {
-		assertEquals(members.size(), 10);
-	}
 
 	@Test
 	public void liamTest() {

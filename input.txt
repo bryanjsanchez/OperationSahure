@@ -1,1 +1,2 @@
-log1.txt
+4 log1.txt
+2 log1.txt

@@ -10,7 +10,8 @@ public class PyramidNetwork {
 	private Member greatBoss;
 	private ArrayList<Member> members;
 	
-	public PyramidNetwork(ArrayList<Member> members) {
+	public PyramidNetwork(String filename, ArrayList<Member> members) {
+		this.filename = filename;
 		this.members = members;
 		this.generatePyramid();
 	}
