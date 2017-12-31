@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class Member {
 	private String name;
-	private int illegalAsset;
+	private int illegalAssets;
 	private Member sponsor;
 	private Member mentor;
 	private ArrayList<Member> children;
 	
-	public Member (String name, int illegalAsset, Member sponsor) {
+	public Member (String name, int illegalAssets, Member sponsor) {
 		this.name = name;
-		this.illegalAsset = illegalAsset;
+		this.illegalAssets = illegalAssets;
 		this.sponsor = sponsor;
 	}
 
@@ -40,10 +40,10 @@ public class Member {
 	}
 
 	/**
-	 * @return Returns member's illegal asset.
+	 * @return Returns member's illegal assets.
 	 */
-	public int getIllegalAsset() {
-		return illegalAsset;
+	public int getIllegalAssets() {
+		return illegalAssets;
 	}
 
 	/**

@@ -8,4 +8,8 @@ import java.util.ArrayList;
 public class PyramidNetwork {
 	private Member greatBoss;
 	private ArrayList<Member> members;
+	
+	public PyramidNetwork(ArrayList<Member> members) {
+		this.members = members;
+	}
 }
