@@ -14,4 +14,36 @@ public class Member {
 		this.illegalAsset = illegalAsset;
 		this.sponsor = sponsor;
 	}
+
+	public Member getMentor() {
+		return mentor;
+	}
+
+	public void setMentor(Member mentor) {
+		this.mentor = mentor;
+	}
+
+	public boolean isArrested() {
+		return isArrested;
+	}
+
+	public void arrest() {
+		this.isArrested = true;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getIllegalAsset() {
+		return illegalAsset;
+	}
+
+	public Member getSponsor() {
+		return sponsor;
+	}
+
+	public ArrayList<Member> getChildren() {
+		return children;
+	}
 }
