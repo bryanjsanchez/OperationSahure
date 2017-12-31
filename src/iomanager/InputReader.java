@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 import pyramid.Member;
 
-/** Class to manage input files. It should open an input.txt file which contains a list of CSV containing Customer data to be analyzed. 
+/** Class to manage input files. It should open an input.txt file which contains a list of cases to be evaluated.
+ * A case consists of the network log file and the maximum number of arrests that can be made. 
  * @author Bryan J Sanchez
  */
 
@@ -19,8 +20,8 @@ public class InputReader {
 	}
 
 	/** Sets the working directory to the location where the program was run.
-	 * @return file path of the input.txt file with the list of cases to be evaluated. A case consists of
-	 * the maximum number of arrests that can be made and the network log file.
+	 * @return file path of the input.txt file with the list of cases to be evaluated. A case consists 
+	 * of the network log file and the maximum number of arrests that can be made. 
 	 */
 	private String openFile() {
 		this.directory = System.getProperty("user.dir") + "/";
@@ -28,9 +29,9 @@ public class InputReader {
 		return inputfilePath;
 	}
 
-	/** Creates an ArrayList of Customers with data obtained from a CSV file.
-	 * @param filePath File path of *.csv with Customer data to parse.
-	 * @return Returns a list of Customers.
+	/** Creates an ArrayList of Member objects with data obtained from an input file.
+	 * @param filePath File path of intput file with Member data to parse.
+	 * @return Returns a list of Member objects.
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
