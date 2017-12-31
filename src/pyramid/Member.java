@@ -10,7 +10,7 @@ public class Member {
 	private int illegalAssets;
 	private Member sponsor;
 	private Member mentor;
-	private ArrayList<Member> children;
+	private ArrayList<Member> children = new ArrayList<>();
 	
 	public Member (String name, int illegalAssets, Member sponsor) {
 		this.name = name;
@@ -54,9 +54,31 @@ public class Member {
 	}
 
 	/**
+	 * @param child Member to be added as child of this Member.
+	 */
+	public void addChild(Member child) {
+		this.children.add(child);
+	}
+	
+	/**
 	 * @return Returns member's children.
 	 */
 	public ArrayList<Member> getChildren() {
 		return children;
+	}
+	
+	/**
+	 * @param i Index of child to return.
+	 * @return Returns child at position i.
+	 */
+	public Member getChild(int i) {
+		return children.get(i);
+	}
+	
+	/**
+	 * @return Returns most recent child added to pyramid network.
+	 */
+	public Member getLastChild() {
+		return children.get(children.size()-1);
 	}
 }

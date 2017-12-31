@@ -35,7 +35,7 @@ public class InputReader {
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public ArrayList<Member> parseMembers(String filePath) throws NumberFormatException, IOException {
+	public ArrayList<Member> parseMembers(String filename) {
 
 		ArrayList<Member> members = new ArrayList<>();
 		String name;
@@ -43,25 +43,40 @@ public class InputReader {
 		String sponsorName;
 		Member sponsor;
 
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(this.directory + filename));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		String inputLine;
-		while ((inputLine = reader.readLine()) != null) {
-			String [] memberData = inputLine.split(",");
-			name = memberData[0];
-			illegalAssets = Integer.parseInt(memberData[1]);
-			sponsor = null;
-			if (memberData.length == 3) {
-				sponsorName = memberData[2];
-				for (Member member : members) {
-					if (member.getName() == sponsorName) {
-						sponsor = member;
-						break;
+		try {
+			while ((inputLine = reader.readLine()) != null) {
+				String [] memberData = inputLine.split("#");
+				name = memberData[0];
+				illegalAssets = Integer.parseInt(memberData[1]);
+				sponsor = null;
+				if (memberData.length == 3) {
+					sponsorName = memberData[2];
+					for (Member member : members) {
+						if (member.getName().equals(sponsorName)) {
+							sponsor = member;
+							break;
+						}
 					}
 				}
+				members.add(new Member(name, illegalAssets, sponsor));
 			}
-			members.add(new Member(name, illegalAssets, sponsor));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		reader.close();
+		try {
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return members;
 	}
 
