@@ -14,25 +14,16 @@ import pyramid.PyramidNetwork;
  */
 
 public class InputReader {
-
-	private String directory;
+	private static String directory;
 
 	public InputReader() {
-		setDirectory();
-	}
-
-	/** Sets the working directory to the location where the program was run.
-	 * @return file path of the input.txt file with the list of cases to be evaluated. A case consists 
-	 * of the network log file and the maximum number of arrests that can be made. 
-	 */
-	private void setDirectory() {
-		this.directory = System.getProperty("user.dir") + "/";
+		InputReader.directory = System.getProperty("user.dir") + "/";
 	}
 	
 	/** Creates an ArrayList of Case objects with data obtained from input.txt file.
 	 * @return Return list of cases to be analyzed in Operation Suhare.
 	 */
-	public ArrayList<Case> getCaseList() {
+	public static ArrayList<Case> getCaseList() {
 		ArrayList<Case> caseList = new ArrayList<>();
 		BufferedReader reader = null;
 		String caseLine;
@@ -40,7 +31,7 @@ public class InputReader {
 		String filename;
 		String[] caseData;
 		try {
-			reader = new BufferedReader(new FileReader(this.directory + "input.txt"));
+			reader = new BufferedReader(new FileReader(InputReader.directory + "input.txt"));
 			while ((caseLine = reader.readLine()) != null) {
 				caseData = caseLine.split(" ");
 				maxArrests = Integer.parseInt(caseData[0]);
@@ -57,7 +48,7 @@ public class InputReader {
 	 * @param filePath File path of input file with Member data to parse.
 	 * @return Returns a list of Member objects.
 	 */
-	public PyramidNetwork parseMembers(String filename) {
+	public static PyramidNetwork parseMembers(String filename) {
 		ArrayList<Member> members = new ArrayList<>();
 		String name;
 		int illegalAssets;
@@ -68,7 +59,7 @@ public class InputReader {
 		BufferedReader reader = null;
 		
 		try {
-			reader = new BufferedReader(new FileReader(this.directory + filename));
+			reader = new BufferedReader(new FileReader(InputReader.directory + filename));
 			while ((inputLine = reader.readLine()) != null) {
 				memberData = inputLine.split("#");
 				name = memberData[0];
@@ -101,10 +92,10 @@ public class InputReader {
 	/**
 	 * @return Returns directory where files are located.
 	 */
-	public String getDirectory() throws IllegalStateException {
+	public static String getDirectory() throws IllegalStateException {
 		if (directory == null) {
 			throw new IllegalStateException();
 		}
-		return directory;
+		return InputReader.directory;
 	}
 }

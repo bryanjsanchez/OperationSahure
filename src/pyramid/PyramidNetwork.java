@@ -13,7 +13,7 @@ public class PyramidNetwork {
 	public PyramidNetwork(String filename, ArrayList<Member> members) {
 		this.filename = filename;
 		this.members = members;
-		this.generatePyramid();
+		generatePyramid();
 	}
 	
 	/** Generates hierarchical relationship between members of this pyramid network. Sets mentor and children relationship.
