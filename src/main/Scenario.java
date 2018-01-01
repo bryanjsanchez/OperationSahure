@@ -9,16 +9,28 @@ import pyramid.Member;
  */
 
 public class Scenario {
-	private int totalAssets;
+	private int recoveredAssets;
 	private ArrayList<Member> arrestedMembers;
 	
 	@SuppressWarnings("unchecked")
-	public Scenario(int totalAssets, ArrayList<Member> arrestedMembers) {
-		this.totalAssets = totalAssets;
+	public Scenario(int recoveredAssets, ArrayList<Member> arrestedMembers) {
+		this.recoveredAssets = recoveredAssets;
 		this.arrestedMembers = (ArrayList<Member>) arrestedMembers.clone();
 	}
 	
 	public Scenario() {
 		this(0, new ArrayList<Member>());
+	}
+	
+	public void incrementRecoveredAssets(int assets) {
+		this.recoveredAssets += assets;
+	}
+	
+	public int getRecoveredAssets() {
+		return this.recoveredAssets;
+	}
+	
+	public ArrayList<Member> getArrestedMembers() {
+		return this.arrestedMembers;
 	}
 }
