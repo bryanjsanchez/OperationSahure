@@ -8,8 +8,7 @@ import pyramid.Member;
 import pyramid.PyramidNetwork;
 
 public class PyramidNetworkTest {
-	public InputReader reader = new InputReader();
-	public PyramidNetwork pyramidNetwork = reader.parseMembers("log1.txt");
+	public PyramidNetwork pyramidNetwork = InputReader.parseMembers("log1.txt");
 	public Member liam = pyramidNetwork.getGreatBoss();
 	public Member emma = liam.getChild(0);
 	public Member jacob = liam.getLastChild();

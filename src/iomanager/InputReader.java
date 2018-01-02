@@ -14,11 +14,6 @@ import pyramid.PyramidNetwork;
  */
 
 public class InputReader {
-	private static String directory;
-
-	public InputReader() {
-		InputReader.directory = System.getProperty("user.dir") + "/";
-	}
 	
 	/** Creates an ArrayList of Case objects with data obtained from input.txt file.
 	 * @return Return list of cases to be analyzed in Operation Suhare.
@@ -31,7 +26,7 @@ public class InputReader {
 		String filename;
 		String[] caseData;
 		try {
-			reader = new BufferedReader(new FileReader(InputReader.directory + "input.txt"));
+			reader = new BufferedReader(new FileReader(getDirectory() + "input.txt"));
 			while ((caseLine = reader.readLine()) != null) {
 				caseData = caseLine.split(" ");
 				maxArrests = Integer.parseInt(caseData[0]);
@@ -59,7 +54,7 @@ public class InputReader {
 		BufferedReader reader = null;
 		
 		try {
-			reader = new BufferedReader(new FileReader(InputReader.directory + filename));
+			reader = new BufferedReader(new FileReader(getDirectory() + filename));
 			while ((inputLine = reader.readLine()) != null) {
 				memberData = inputLine.split("#");
 				name = memberData[0];
@@ -92,10 +87,7 @@ public class InputReader {
 	/**
 	 * @return Returns directory where files are located.
 	 */
-	public static String getDirectory() throws IllegalStateException {
-		if (directory == null) {
-			throw new IllegalStateException();
-		}
-		return InputReader.directory;
+	public static String getDirectory() {
+		return System.getProperty("user.dir") + "/";
 	}
 }

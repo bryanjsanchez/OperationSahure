@@ -13,13 +13,14 @@ public class Scenario {
 	private ArrayList<Member> arrestedMembers;
 	
 	@SuppressWarnings("unchecked")
-	public Scenario(int recoveredAssets, ArrayList<Member> arrestedMembers) {
-		this.recoveredAssets = recoveredAssets;
-		this.arrestedMembers = (ArrayList<Member>) arrestedMembers.clone();
+	public Scenario(Scenario scenario) {
+		this.recoveredAssets = scenario.getRecoveredAssets();
+		this.arrestedMembers = (ArrayList<Member>) scenario.getArrestedMembers().clone();
 	}
 	
 	public Scenario() {
-		this(0, new ArrayList<Member>());
+		this.recoveredAssets = 0;
+		this.arrestedMembers = new ArrayList<>();
 	}
 	
 	public void incrementRecoveredAssets(int assets) {
@@ -30,7 +31,16 @@ public class Scenario {
 		return this.recoveredAssets;
 	}
 	
+	public void arrestMember(Member member) {
+		this.arrestedMembers.add(member);
+		this.recoveredAssets += member.getIllegalAssets();
+	}
+	
 	public ArrayList<Member> getArrestedMembers() {
 		return this.arrestedMembers;
+	}
+	
+	public Member getLastArrestedMember() {
+		return this.arrestedMembers.get(this.arrestedMembers.size()-1);
 	}
 }

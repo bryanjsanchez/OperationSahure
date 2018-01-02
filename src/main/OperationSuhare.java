@@ -3,6 +3,8 @@ package main;
 import java.util.ArrayList;
 
 import iomanager.InputReader;
+import iomanager.OutputWriter;
+import pyramid.Member;
 import pyramid.PyramidNetwork;
 
 /** Runs simulation to determine which arrest scenarios return the maximum assets.
@@ -10,19 +12,44 @@ import pyramid.PyramidNetwork;
  */
 
 public class OperationSuhare {
+
 	static ArrayList<PyramidNetwork> networkList = new ArrayList<>();
 
+	/** Program's main method. Gets list of cases and generates an output file with results for each case.
+	 */
 	public static void main(String[] args) {
 		ArrayList<Case> caseList = InputReader.getCaseList();
-		
-		PyramidNetwork currentNetwork;
-		ArrayList<Scenario> scenarioList;
-		for (Case currentCase : caseList) {
-			currentNetwork = getCurrentNetwork(currentCase);
-			scenarioList = generateAllScenarios(currentCase, currentNetwork);
+		for (int i = 0; i < caseList.size(); i++) {
+			analyzeCase(i+1, caseList.get(i));
 		}
 	}
-	
+
+	/** Analyzes a case and generates an output file containing the arrests which will lead to the maximum illegal assets recovery.
+	 * @param currentCase Case to be analyzed.
+	 * @param caseNumber Number which will identify the output file for this case.
+	 */
+	private static void analyzeCase(int caseNumber, Case currentCase) {
+		String filename = "output" + caseNumber + ".txt";
+		int maxAssets = 0;
+		PyramidNetwork currentNetwork = getCurrentNetwork(currentCase);
+		ArrayList<Scenario> bestScenarioList = new ArrayList<>();
+		if (currentCase.getMaxArrests() <= 0) {
+			OutputWriter.saveFile(filename, maxAssets, bestScenarioList);
+		} else {
+			ArrayList<Scenario> scenarioList = generateAllScenarios(currentCase.getMaxArrests(), currentNetwork);
+			for (Scenario scenario : scenarioList) {
+				if (scenario.getRecoveredAssets() == maxAssets) {
+					bestScenarioList.add(scenario);
+				} else if (scenario.getRecoveredAssets() > maxAssets) {
+					maxAssets = scenario.getRecoveredAssets();
+					bestScenarioList = new ArrayList<>();
+					bestScenarioList.add(scenario);
+				}
+			}
+			OutputWriter.saveFile(filename, maxAssets, bestScenarioList);
+		}
+	}
+
 	/** Gets PyramidNetwork connected to the current case being analyzed.
 	 * @param c Case to be analyzed.
 	 * @param networks List of networks generated from John Doe's computer files.
@@ -43,8 +70,63 @@ public class OperationSuhare {
 		return currentNetwork;
 	}
 
-	private static ArrayList<Scenario> generateAllScenarios(Case currentCase, PyramidNetwork pyramidNetwork) {
-		//TODO
-		return null;
+	/** Generates a list of arrest scenarios which will result in the maximum illegal assets recovered by the police.
+	 * @param maxArrests Maximum number of arrests possible.
+	 * @param pyramidNetwork The pyramid network related to the current case being analyzed.
+	 * @return Returns a list of all possible scenarios which maximize illegal asset recovery.
+	 */
+	private static ArrayList<Scenario> generateAllScenarios(int maxArrests, PyramidNetwork pyramidNetwork) {
+		ArrayList<Scenario> scenarioList = new ArrayList<>();
+		ArrayList<Scenario> tempScenarioList;
+		Scenario newScenario;
+		int remainingArrests = --maxArrests;
+		for (Member targetZero : pyramidNetwork.getMembers()) {
+			newScenario = new Scenario();
+			newScenario.arrestMember(targetZero);
+			tempScenarioList = new ArrayList<>();
+			tempScenarioList.add(newScenario);
+			scenarioList.addAll(recursiveArrest(tempScenarioList, remainingArrests));
+		}
+		return scenarioList;
+	}
+
+
+	private static ArrayList<Scenario> recursiveArrest(ArrayList<Scenario> scenarioList, int remainingArrests) {
+		if (remainingArrests == 0) {
+			return scenarioList;
+		} else {
+			remainingArrests--;
+			ArrayList<Scenario> tempScenarioList = new ArrayList<>();
+			Scenario newScenario;
+			for (Scenario scenario : scenarioList) {
+				Member lastArrest = scenario.getLastArrestedMember();
+				ArrayList<Member> connectedMembers = new ArrayList<>();
+				if (lastArrest.getSponsor() != null
+						&& !scenario.getArrestedMembers().contains(lastArrest.getSponsor())
+						&& !connectedMembers.contains(lastArrest.getSponsor())) {
+					connectedMembers.add(lastArrest.getSponsor());
+				}
+				if (lastArrest.getMentor() != null
+						&& !scenario.getArrestedMembers().contains(lastArrest.getMentor())
+						&& !connectedMembers.contains(lastArrest.getMentor())) {
+					connectedMembers.add(lastArrest.getMentor());
+				}
+				for (Member child : lastArrest.getChildren()) {
+					if (!scenario.getArrestedMembers().contains(child)
+							&& !connectedMembers.contains(child)) {
+						newScenario = new Scenario(scenario);
+						newScenario.arrestMember(child);
+						tempScenarioList.add(newScenario);
+					}
+				}
+				for (Member connectedMember : connectedMembers) {
+					newScenario = new Scenario(scenario);
+					newScenario.arrestMember(connectedMember);
+					tempScenarioList.add(newScenario);
+				}
+			}
+			return recursiveArrest(tempScenarioList, remainingArrests);
+		}
 	}
 }
+
