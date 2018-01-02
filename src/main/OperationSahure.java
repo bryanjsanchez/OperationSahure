@@ -11,7 +11,7 @@ import pyramid.PyramidNetwork;
  * @author Bryan J Sanchez
  */
 
-public class OperationSuhare {
+public class OperationSahure {
 
 	static ArrayList<PyramidNetwork> networkList = new ArrayList<>();
 
