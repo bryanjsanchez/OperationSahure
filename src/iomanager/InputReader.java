@@ -56,6 +56,9 @@ public class InputReader {
 		try {
 			reader = new BufferedReader(new FileReader(getDirectory() + filename));
 			while ((inputLine = reader.readLine()) != null) {
+				if (inputLine.matches("\\s*")) {
+					continue;
+				}
 				memberData = inputLine.split("#");
 				name = memberData[0];
 				illegalAssets = Integer.parseInt(memberData[1]);
@@ -75,6 +78,9 @@ public class InputReader {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
+			return new PyramidNetwork(filename, members);
 		}
 		try {
 			reader.close();
