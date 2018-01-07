@@ -42,8 +42,9 @@ public class InputReader {
 	/** Creates an ArrayList of Member objects with data obtained from an input file.
 	 * @param filePath File path of input file with Member data to parse.
 	 * @return Returns a list of Member objects.
+	 * @throws IllegalArgumentException Input file is invalid.
 	 */
-	public static PyramidNetwork parseMembers(String filename) {
+	public static PyramidNetwork parseMembers(String filename) throws IllegalArgumentException {
 		ArrayList<Member> members = new ArrayList<>();
 		String name;
 		int illegalAssets;
@@ -65,6 +66,10 @@ public class InputReader {
 				sponsor = null;
 				if (memberData.length == 3) {
 					sponsorName = memberData[2];
+					if (sponsorName.equals(name)) {
+						reader.close();
+						throw new IllegalArgumentException("Member cannot be its own sponsor.");
+					}
 					for (Member member : members) {
 						if (member.getName().equals(sponsorName)) {
 							sponsor = member;

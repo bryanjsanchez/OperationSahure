@@ -15,16 +15,16 @@ public class OutputWriter {
 	
 	/** Static method which creates an output file listing all possible scenarios that will generate the
 	 * maximum seized assets possible.
-	 * @param filepath Path of the file where data is to be written.
+	 * @param filepath Name of the file where data is to be written.
 	 * @param seizedAssets Maximum seized assets.
 	 * @param scenarioList List of all possible scenarios. A scenario is any order in which members 
 	 * were arrested that generates the maximum seized assets.
 	 */
-	public static void saveFile(String filepath, int seizedAssets, ArrayList<Scenario> scenarioList) {
+	public static void saveFile(String filename, int seizedAssets, ArrayList<Scenario> scenarioList) {
 		PrintWriter writer = null;
 		ArrayList<Member> currentArrestedList;
 		try {
-			writer = new PrintWriter(filepath);
+			writer = new PrintWriter(filename);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -37,6 +37,22 @@ public class OutputWriter {
 			}
 			writer.println();
 		}
+		writer.close();
+	}
+	
+	/** Static method which creates an output file with message explaining why the input file is invalid.
+	 * @param filename Name of the file where data is to be written.
+	 * @param message Error message to write in output file.
+	 */
+	public static void saveInvalidFile(String filename, String message) {
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(filename);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		writer.println("Maximum seized assets: 0");
+		writer.println(message);
 		writer.close();
 	}
 }

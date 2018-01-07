@@ -31,7 +31,13 @@ public class OperationSahure {
 	private static void analyzeCase(int caseNumber, Case currentCase) {
 		String filename = "output" + caseNumber + ".txt";
 		int maxAssets = 0;
-		PyramidNetwork currentNetwork = getCurrentNetwork(currentCase);
+		PyramidNetwork currentNetwork = null;
+		try {
+			currentNetwork = getCurrentNetwork(currentCase);
+		} catch (IllegalArgumentException e) {
+			OutputWriter.saveInvalidFile(filename, e.getMessage());
+			return;
+		}
 		ArrayList<Scenario> bestScenarioList = new ArrayList<>();
 		if (currentCase.getMaxArrests() <= 0) {
 			OutputWriter.saveFile(filename, maxAssets, bestScenarioList);
@@ -54,8 +60,9 @@ public class OperationSahure {
 	 * @param c Case to be analyzed.
 	 * @param networks List of networks generated from John Doe's computer files.
 	 * @return Returns PyramidNetwork connected to the case being analyzed. 
+	 * @throws IllegalArgumentException Input file is invalid for this case.
 	 */
-	private static PyramidNetwork getCurrentNetwork(Case currentCase) {
+	private static PyramidNetwork getCurrentNetwork(Case currentCase) throws IllegalArgumentException {
 		PyramidNetwork currentNetwork = null;
 		for (PyramidNetwork network : networkList) {
 			if (network.getFilename().equals(currentCase.getFilename())) {
