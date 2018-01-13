@@ -1,5 +1,6 @@
 package iomanager;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -7,24 +8,27 @@ import java.util.ArrayList;
 import main.Scenario;
 import pyramid.Member;
 
-/** Class to write output files.
+/** Class to write output files with results from a certain case analysis.
  * @author Bryan J Sanchez
  */
 
 public class OutputWriter {
-	
+
 	/** Static method which creates an output file listing all possible scenarios that will generate the
 	 * maximum seized assets possible.
 	 * @param filepath Name of the file where data is to be written.
-	 * @param seizedAssets Maximum seized assets.
-	 * @param scenarioList List of all possible scenarios. A scenario is any order in which members 
-	 * were arrested that generates the maximum seized assets.
+	 * @param seizedAssets Maximum seized assets for the case being analyzed.
+	 * @param scenarioList List of all possible arrest scenarios that generated the maximum seized assets.
 	 */
 	public static void saveFile(String filename, int seizedAssets, ArrayList<Scenario> scenarioList) {
 		PrintWriter writer = null;
 		ArrayList<Member> currentArrestedList;
+		File outputDirectory = new File("output");
+		if (!outputDirectory.exists()){
+			outputDirectory.mkdir(); //Creates an output directory if it does not exist.
+		}
 		try {
-			writer = new PrintWriter(filename);
+			writer = new PrintWriter(outputDirectory.getName() + "/" + filename);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -39,7 +43,7 @@ public class OutputWriter {
 		}
 		writer.close();
 	}
-	
+
 	/** Static method which creates an output file with message explaining why the input file is invalid.
 	 * @param filename Name of the file where data is to be written.
 	 * @param message Error message to write in output file.
