@@ -27,6 +27,9 @@ public class InputReader {
 		try {
 			reader = new BufferedReader(new FileReader(getDirectory() + "input.txt"));
 			while ((caseLine = reader.readLine()) != null) {
+				if (caseLine.matches("\\s*")) {
+					continue;
+				}
 				caseData = caseLine.split(" ");
 				maxArrests = Integer.parseInt(caseData[0]);
 				filename = caseData[1];
