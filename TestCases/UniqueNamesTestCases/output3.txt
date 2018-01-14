@@ -1,0 +1,4 @@
+Maximum seized assets: 372
+List 1: Josue, Hassell, Arline, Conyers, Mott
+List 2: Mott, Conyers, Arline, Montalvo, Dong
+List 3: Dong, Montalvo, Arline, Conyers, Mott

@@ -16,6 +16,7 @@ public class OperationSahure {
 	static ArrayList<PyramidNetwork> networkList = new ArrayList<>();
 
 	/** Program's main method. Gets list of cases and generates an output file with results for each case.
+	 * @param args Command line arguments.
 	 */
 	public static void main(String[] args) {
 		ArrayList<Case> caseList = InputReader.getCaseList();
@@ -24,7 +25,7 @@ public class OperationSahure {
 		}
 	}
 
-	/** Analyzes a case and generates an output file containing the arrests which will lead to the maximum illegal assets recovery.
+	/** Analyzes a case and generates an output file containing the arrests which will lead to the maximum assets recovery.
 	 * @param currentCase Case to be analyzed.
 	 * @param caseNumber Number which will identify the output file for this case.
 	 */
@@ -40,7 +41,7 @@ public class OperationSahure {
 		}
 		ArrayList<Scenario> bestScenarioList = new ArrayList<>();
 		if (currentCase.getMaxArrests() <= 0) {
-			OutputWriter.saveFile(filename, maxAssets, bestScenarioList);
+			OutputWriter.saveInvalidFile(currentCase.getFilename(), "No arrests were made.");;
 		} else {
 			ArrayList<Scenario> scenarioList = generateAllScenarios(currentCase.getMaxArrests(), currentNetwork);
 			for (Scenario scenario : scenarioList) {
@@ -57,8 +58,7 @@ public class OperationSahure {
 	}
 
 	/** Gets PyramidNetwork connected to the current case being analyzed.
-	 * @param c Case to be analyzed.
-	 * @param networks List of networks generated from John Doe's computer files.
+	 * @param currentCase Case to be analyzed.
 	 * @return Returns PyramidNetwork connected to the case being analyzed. 
 	 * @throws IllegalArgumentException Input file is invalid for this case.
 	 */
@@ -77,10 +77,10 @@ public class OperationSahure {
 		return currentNetwork;
 	}
 
-	/** Generates a list of arrest scenarios which will result in the maximum illegal assets recovered by the police.
+	/** Generates a list of all possible arrest scenarios.
 	 * @param maxArrests Maximum number of arrests possible.
 	 * @param pyramidNetwork The pyramid network related to the current case being analyzed.
-	 * @return Returns a list of all possible scenarios which maximize illegal asset recovery.
+	 * @return Returns a list of all possible arrest scenarios.
 	 */
 	private static ArrayList<Scenario> generateAllScenarios(int maxArrests, PyramidNetwork pyramidNetwork) {
 		ArrayList<Scenario> scenarioList = new ArrayList<>();
@@ -97,14 +97,18 @@ public class OperationSahure {
 		return scenarioList;
 	}
 
-
+	/** Creates a new scenario for each of the possible arrests that can be made. A different scenario is created for
+	 * each of the members that the last arrested member can reveal.
+	 * @param scenarioList The list containing the members that have been arrested so far.
+	 * @param remainingArrests The number of arrests that can still be made. 
+	 * @return Returns a list with all the possible scenarios that are possible so far. 
+	 */
 	private static ArrayList<Scenario> recursiveArrest(ArrayList<Scenario> scenarioList, int remainingArrests) {
 		if (remainingArrests == 0) {
 			return scenarioList;
 		} else {
 			remainingArrests--;
 			ArrayList<Scenario> tempScenarioList = new ArrayList<>();
-			Scenario newScenario;
 			for (Scenario scenario : scenarioList) {
 				Member lastArrest = scenario.getLastArrestedMember();
 				ArrayList<Member> connectedMembers = new ArrayList<>();
@@ -121,15 +125,17 @@ public class OperationSahure {
 				for (Member child : lastArrest.getChildren()) {
 					if (!scenario.getArrestedMembers().contains(child)
 							&& !connectedMembers.contains(child)) {
-						newScenario = new Scenario(scenario);
-						newScenario.arrestMember(child);
-						tempScenarioList.add(newScenario);
+						connectedMembers.add(child);
 					}
 				}
-				for (Member connectedMember : connectedMembers) {
-					newScenario = new Scenario(scenario);
-					newScenario.arrestMember(connectedMember);
-					tempScenarioList.add(newScenario);
+				if (connectedMembers.isEmpty()) {
+					tempScenarioList.add(scenario);
+				} else {
+					for (Member connectedMember : connectedMembers) {
+						Scenario newScenario = new Scenario(scenario);
+						newScenario.arrestMember(connectedMember);
+						tempScenarioList.add(newScenario);
+					}
 				}
 			}
 			return recursiveArrest(tempScenarioList, remainingArrests);

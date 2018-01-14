@@ -16,7 +16,7 @@ public class OutputWriter {
 
 	/** Static method which creates an output file listing all possible scenarios that will generate the
 	 * maximum seized assets possible.
-	 * @param filepath Name of the file where data is to be written.
+	 * @param filename Name of the file where data is to be written.
 	 * @param seizedAssets Maximum seized assets for the case being analyzed.
 	 * @param scenarioList List of all possible arrest scenarios that generated the maximum seized assets.
 	 */
@@ -44,7 +44,7 @@ public class OutputWriter {
 		writer.close();
 	}
 
-	/** Static method which creates an output file with message explaining why the input file is invalid.
+	/** Static method which creates an output file with message explaining why the simulation failed.
 	 * @param filename Name of the file where data is to be written.
 	 * @param message Error message to write in output file.
 	 */

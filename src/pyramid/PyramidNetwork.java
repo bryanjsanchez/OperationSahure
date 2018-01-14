@@ -10,6 +10,11 @@ public class PyramidNetwork {
 	private Member greatBoss;
 	private ArrayList<Member> members;
 	
+	/**Creates a new pyramid network.
+	 * @param filename Name of the file containing data for this pyramid network.
+	 * @param members List of members that form this pyramid network. Members on the list contain only
+	 * data from input file, constructor takes care of generating remaining hierarchical relationships.
+	 */
 	public PyramidNetwork(String filename, ArrayList<Member> members) {
 		this.filename = filename;
 		this.members = members;

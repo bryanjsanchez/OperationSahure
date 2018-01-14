@@ -1,0 +1,3 @@
+Maximum seized assets: 364
+List 1: Phil, Israel, Manuel, Eduardo, Audrey
+List 2: Audrey, Eduardo, Manuel, Israel, Phil

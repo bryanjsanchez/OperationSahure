@@ -12,6 +12,11 @@ public class Member {
 	private Member mentor;
 	private ArrayList<Member> children = new ArrayList<>();
 	
+	/** Creates a new member of the pyramid network.
+	 * @param name Member's name.
+	 * @param illegalAssets Illegal assets that the member holds.
+	 * @param sponsor Member's sponsor.
+	 */
 	public Member (String name, int illegalAssets, Member sponsor) {
 		this.name = name;
 		this.illegalAssets = illegalAssets;

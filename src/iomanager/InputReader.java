@@ -9,14 +9,13 @@ import pyramid.Member;
 import pyramid.PyramidNetwork;
 
 /** Class to manage input files. It should open an input.txt file which contains a list of cases to be evaluated.
- * A case consists of the network log file and the maximum number of arrests that can be made. 
  * @author Bryan J Sanchez
  */
 
 public class InputReader {
 	
 	/** Creates an ArrayList of Case objects with data obtained from input.txt file.
-	 * @return Return list of cases to be analyzed in Operation Suhare.
+	 * @return Return list of cases to be analyzed in Operation Sahure.
 	 */
 	public static ArrayList<Case> getCaseList() {
 		ArrayList<Case> caseList = new ArrayList<>();
@@ -39,8 +38,8 @@ public class InputReader {
 		return caseList;
 	}
 	
-	/** Creates an ArrayList of Member objects with data obtained from an input file.
-	 * @param filePath File path of input file with Member data to parse.
+	/** Creates an PyramidNetwork object with data obtained from an input file.
+	 * @param filename File path of input file with Member data to parse.
 	 * @return Returns a list of Member objects.
 	 * @throws IllegalArgumentException Input file is invalid.
 	 */
@@ -79,6 +78,7 @@ public class InputReader {
 				}
 				members.add(new Member(name, illegalAssets, sponsor));
 			}
+			reader.close();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -87,16 +87,11 @@ public class InputReader {
 			e.printStackTrace();
 			return new PyramidNetwork(filename, members);
 		}
-		try {
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		return new PyramidNetwork(filename, members);
 	}
 
 	/**
-	 * @return Returns directory where files are located.
+	 * @return Returns directory where project is located.
 	 */
 	public static String getDirectory() {
 		return System.getProperty("user.dir") + "/";

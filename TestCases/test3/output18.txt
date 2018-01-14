@@ -1,0 +1,3 @@
+Maximum seized assets: 380
+List 1: Jaylen, Miles, Michaela, Jabari
+List 2: Michaela, Jabari, Miles, Jaylen

@@ -1,0 +1,3 @@
+Maximum seized assets: 568
+List 1: Brayan, Neveah, Hailey, Emilio, Brenda, Mila
+List 2: Mila, Brenda, Emilio, Hailey, Neveah, Brayan

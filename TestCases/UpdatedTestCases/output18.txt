@@ -1,0 +1,4 @@
+Maximum seized assets: 383
+List 1: Catherine, Elliot, Lila, Remington
+List 2: Jorge, Camila, Amari, Clarence
+List 3: Remington, Lila, Elliot, Catherine
