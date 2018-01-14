@@ -2,6 +2,8 @@ package main;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import iomanager.InputReader;
 import iomanager.OutputWriter;
 import pyramid.Member;
@@ -23,6 +25,7 @@ public class OperationSahure {
 		for (int i = 0; i < caseList.size(); i++) {
 			analyzeCase(i+1, caseList.get(i));
 		}
+		JOptionPane.showMessageDialog(null, "Optimum arrest scenarios found!\n\nSee results in 'output' directory.");
 	}
 
 	/** Analyzes a case and generates an output file containing the arrests which will lead to the maximum assets recovery.
