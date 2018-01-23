@@ -50,8 +50,12 @@ public class OutputWriter {
 	 */
 	public static void saveInvalidFile(String filename, String message) {
 		PrintWriter writer = null;
+		File outputDirectory = new File("output");
+		if (!outputDirectory.exists()){
+			outputDirectory.mkdir(); //Creates an output directory if it does not exist.
+		}
 		try {
-			writer = new PrintWriter(filename);
+			writer = new PrintWriter(outputDirectory.getName() + "/" + filename);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

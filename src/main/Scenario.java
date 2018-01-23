@@ -7,7 +7,6 @@ import pyramid.Member;
 /** A scenario of arrested members and the total assets recovered from them by the police.
  * @author Bryan J Sanchez
  */
-
 public class Scenario {
 	private int recoveredAssets;
 	private ArrayList<Member> arrestedMembers;

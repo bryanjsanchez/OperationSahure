@@ -1,0 +1,12 @@
+Maximum seized assets: 30
+
+List 1: Alex, Bob, Harry
+List 2: Alex, Crystal, Ilma
+List 3: Alex, Crystal, Bob
+List 4: Bob, Alex, Crystal
+List 5: Crystal, Bob, Harry
+List 6: Crystal, Bob, Alex
+List 7: Crystal, Alex, Bob
+List 8: Harry, Bob, Alex
+List 9: Ilma, Crystal, Bob
+List 10: Ilma, Crystal, Alex

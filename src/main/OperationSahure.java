@@ -14,17 +14,18 @@ import pyramid.PyramidNetwork;
  */
 
 public class OperationSahure {
-
 	static ArrayList<PyramidNetwork> networkList = new ArrayList<>();
 
 	/** Program's main method. Gets list of cases and generates an output file with results for each case.
 	 * @param args Command line arguments.
 	 */
 	public static void main(String[] args) {
+		System.out.println("Analyzing cases, please wait...");
 		ArrayList<Case> caseList = InputReader.getCaseList();
 		for (int i = 0; i < caseList.size(); i++) {
 			analyzeCase(i+1, caseList.get(i));
 		}
+		System.out.println("Optimum arrest scenarios found! See results in 'output' directory.");
 		JOptionPane.showMessageDialog(null, "Optimum arrest scenarios found!\n\nSee results in 'output' directory.");
 	}
 
@@ -44,7 +45,7 @@ public class OperationSahure {
 		}
 		ArrayList<Scenario> bestScenarioList = new ArrayList<>();
 		if (currentCase.getMaxArrests() <= 0) {
-			OutputWriter.saveInvalidFile(currentCase.getFilename(), "No arrests were made.");;
+			OutputWriter.saveInvalidFile(filename, "No arrests were made.");;
 		} else {
 			ArrayList<Scenario> scenarioList = generateAllScenarios(currentCase.getMaxArrests(), currentNetwork);
 			for (Scenario scenario : scenarioList) {

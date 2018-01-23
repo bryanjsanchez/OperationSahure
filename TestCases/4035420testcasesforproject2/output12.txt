@@ -1,0 +1,4 @@
+Maximum seized assets: 160000
+
+List 1: P, IF, UP
+List 2: UP, IF, P

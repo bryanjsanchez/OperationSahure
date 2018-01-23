@@ -1,0 +1,5 @@
+Maximum seized assets: 224
+
+List 1: Emma, Liam, Jacob, William, James, Alexander
+List 2: Alexander, James, William, Jacob, Emma, Liam
+List 3: Alexander, James, William, Jacob, Liam, Emma
